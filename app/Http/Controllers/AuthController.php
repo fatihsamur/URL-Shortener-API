@@ -73,18 +73,29 @@ class AuthController extends Controller
     // get user
     public function me(Request $request)
     {
-        return response()->json(
-            $request->user()
-        );
+        $user = $request->user();
+        if ($user) {
+            return $user;
+        } else {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
     }
 
     // logout user
-    public function logout(Request $request)
+    public function logOut(Request $request)
     {
-        $request->user()->token()->revoke();
-
-        return response()->json([
-            'message' => 'Successfully logged out',
-        ]);
+        $user = $request->user();
+        if ($user) {
+            $user->tokens()->delete();
+            return response()->json([
+                'message' => 'Logged out',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
     }
 }

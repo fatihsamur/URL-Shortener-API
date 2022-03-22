@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('me', [AuthController::class, 'me'])->middleware('auth:sanctum')->name('me');
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthController::class, 'logOut'])->middleware('auth:sanctum')->name('logout');
 
 Route::post('generate-short-url', [ShortLinkController::class, 'store'])->name('short-url.store');
 Route::get('short-url/{code}', [ShortLinkController::class, 'shortenedLink'])->name('short-url.shortenedLink');
