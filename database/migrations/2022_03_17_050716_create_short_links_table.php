@@ -18,6 +18,13 @@ class CreateShortLinksTable extends Migration
             $table->string('link');
             $table->string('code');
             $table->timestamps();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table
+                ->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

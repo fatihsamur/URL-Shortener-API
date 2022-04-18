@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function shortLinks()
+    {
+        return $this->hasMany(ShortLink::class, 'short_link_id', 'id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
