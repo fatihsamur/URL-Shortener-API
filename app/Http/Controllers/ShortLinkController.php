@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ShortLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\User;
+
 
 class ShortLinkController extends Controller
 {
@@ -25,9 +27,10 @@ class ShortLinkController extends Controller
             ], 200);
         }
 
-        // store url and short url
+        // store url and short url and user
         $input['link'] = $request->link;
         $input['code'] = $this->generateShortLink();
+        $input['user_id'] = $request->user()->id;
 
         // save to database
         $shortlink = ShortLink::create($input);
@@ -35,6 +38,8 @@ class ShortLinkController extends Controller
         // return short url
         return response()->json([
             'code' => $shortlink->code,
+            'link' => $shortlink->link,
+            'user' => $shortlink->user->name,
             'message' => 'Short link generated successfully.'
         ]);
     }
@@ -60,6 +65,17 @@ class ShortLinkController extends Controller
             'code' => $find->code,
             'originalLink' => $find->link,
 
+        ]);
+    }
+
+    // get all short links of a user
+    public function getAllShortLinks(Request $request)
+    {
+        $user = $request->user();
+        $shortLinks = $user->shortLinks;
+
+        return response()->json([
+            'shortLinks' => $shortLinks,
         ]);
     }
 }

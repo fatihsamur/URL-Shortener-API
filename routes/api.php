@@ -25,5 +25,8 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('me', [AuthController::class, 'me'])->middleware('auth:sanctum')->name('me');
 Route::post('logout', [AuthController::class, 'logOut'])->middleware('auth:sanctum')->name('logout');
 
-Route::post('generate-short-url', [ShortLinkController::class, 'store'])->name('short-url.store');
+Route::post('generate-short-url', [ShortLinkController::class, 'store'])->middleware('auth:sanctum')->name('short-url.store');
 Route::get('short-url/{code}', [ShortLinkController::class, 'shortenedLink'])->name('short-url.shortenedLink');
+
+// get all short links of a user
+Route::get('user-short-Links', [ShortLinkController::class, 'getAllShortLinks'])->middleware('auth:sanctum')->name('short-url.getAllShortLinks');

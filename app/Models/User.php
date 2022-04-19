@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     public function shortLinks()
     {
-        return $this->hasMany(ShortLink::class, 'short_link_id', 'id');
+        return $this->hasMany(ShortLink::class, 'user_id', 'id');
     }
 
     /**
