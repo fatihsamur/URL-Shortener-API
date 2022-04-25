@@ -30,3 +30,5 @@ Route::get('short-url/{code}', [ShortLinkController::class, 'shortenedLink'])->n
 
 // get all short links of a user
 Route::get('user-short-Links', [ShortLinkController::class, 'getAllShortLinks'])->middleware('auth:sanctum')->name('short-url.getAllShortLinks');
+// delete shortlink by id
+Route::delete('user-short-Link/{id}', [ShortLinkController::class, 'deleteShortLink'])->middleware('auth:sanctum')->name('short-url.deleteShortLink');

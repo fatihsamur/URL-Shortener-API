@@ -78,4 +78,21 @@ class ShortLinkController extends Controller
             'shortLinks' => $shortLinks,
         ]);
     }
+
+    // delete shortlink by id
+    public function deleteShortLink(Request $request, $id)
+    {
+        $shortLink = ShortLink::find($id);
+        if ($shortLink) {
+            $shortLink->delete();
+            return response()->json([
+                'message' => 'Short link deleted successfully.',
+                'shortLinks' => $request->user()->shortLinks,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Short link not found.'
+            ]);
+        }
+    }
 }
